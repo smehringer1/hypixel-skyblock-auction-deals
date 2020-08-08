@@ -1,0 +1,7 @@
+.flaskenv
+/Lib
+/Scripts
+/Include
+/.venv
+/_pycache_
+pyvenv.cfg

@@ -1,0 +1,20 @@
+.navbar {
+    background: #4a3cc9;
+    padding: 15px;
+    border-bottom: black 1px solid;
+    .contents {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        margin: auto;
+
+        .title {
+            font-size: 45px;
+            color: white;
+            font-style: bold;
+        }
+
+
+    }
+
+}
