@@ -3,17 +3,18 @@ import json
 import requests
 import time
 import statistics
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-MONGO_LOCAL = 'mongodb://127.0.0.1:27017'
-MONGO_CLOUD = 'mongodb+srv://dbAdmin:mgvt6RDlbYq1uALI@cluster0.uqeti.mongodb.net/db?retryWrites=true&w=majority'
 
-connection = pymongo.MongoClient(MONGO_LOCAL)
+connection = pymongo.MongoClient(os.getenv('MONGO_LOCAL'))
 db = connection['db']
 auctionDB = db['auctions']
 lowestPricesDB = db['lowest_prices']
 
 API_BASE = 'https://api.hypixel.net/skyblock/auctions?page='
-KEY = '&key=74a3284f-d0de-497d-a116-755c7fc7868a'
+KEY = os.getenv('API_KEY')
 
 weapon_reforges = ('Gentle','Odd','Fast','Fair','Epic','Sharp','Heroic','Spicy','Legendary','Deadly','Fine','Grand','Hasty','Neat','Rapid','Unreal','Awkward','Rich','Fabled','Suspicious','Gilded','Precise')
 armor_reforges = ('Clean','Fierce','Heavy','Light','Mythic','Pure','Smart','Titanic','Wise','Very','Highly','Extremely','Not So','Absolutely','Perfect','Necrotic','Spiked','Renowned','Cubic','Warped','Reinforced','Loving','Ridiculous')
@@ -143,37 +144,5 @@ def update_lowest_prices():
     removed = lowestPricesDB.delete_many({'timestamp' : {'$ne' : time_stamp}})
     print('Updated, ' + str(removed.deleted_count) + ' documents were removed')
 
-# def find_deals(percent_off_threshold,minimum_price):
-#     deals = []
-#     pipeline = [
-#         {'$match' : {'bin' :  True}},
-#         {'$sort' : {'item_name' : 1, 'starting_bid' : 1}},
-#         {'$group' : {
-#             '_id' : '$item_name',
-#             'items' : {'$push' : {'item_name' : '$item_name', 'price' : '$starting_bid'}} 
-#         }},
-#         {'$project' : {
-#             'item' : {'$arrayElemAt' : ['$items' , 1]}
-#         }},
-#         {'$project' : {'price' : '$item.price'}},
-#         {'$sort' : {'_id' : 1}}
-#     ]
-#     results = auctionDB.aggregate(pipeline)
-#     for result in results:
-#         item_name = result['_id']
-#         query = lowestPricesDB.find_one({'_id' : item_name})
-#         second_lowest_price = result.get('price',0)
-#         lowest_price = query.get('lowest')
-#         if not second_lowest_price == 0:
-#             percent = lowest_price / second_lowest_price
-#             if second_lowest_price >= minimum_price:
-#                 if lowest_price / second_lowest_price < percent_off_threshold:
-#                     deal = {'item_name' : item_name, 'lowest_price' : lowest_price, 'second_lowest_price' : second_lowest_price, 'percentage' : round(percent, 2)}
-#                     deals.append(deal)
-#     return deals
-
 if __name__ == '__main__':
-    #from bson.json_util import dumps
-    #print(find_deals(0.7,20000))
-    #update_lowest_prices()
     update_all_auctions()

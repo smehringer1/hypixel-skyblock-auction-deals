@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Navbar from './components/Navbar/Navbar'
 import Sidebar from './components/Sidebar/Sidebar'
 import ItemCardContainer from './components/Content/ItemCardContainer'
-import './App.css'
+import './App.scss'
 
 function App() {
   var defaultSettings = { searchQuery: "", percentThreshold: 0.15, minPrice: 0 }

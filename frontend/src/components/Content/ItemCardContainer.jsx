@@ -1,7 +1,6 @@
 import React from 'react'
 import ItemCard from './ItemCard'
 import  {Paper, Grid} from '@material-ui/core/'
-import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty'
 
 export default function ItemCardContainer(props) {
     const sortCompare = (a, b) => {
