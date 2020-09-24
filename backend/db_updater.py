@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-connection = pymongo.MongoClient(os.getenv('MONGO_LOCAL'))
+connection = pymongo.MongoClient(os.getenv('MONGO_DOCKER'))
 db = connection['db']
 auctionDB = db['auctions']
 lowestPricesDB = db['lowest_prices']
