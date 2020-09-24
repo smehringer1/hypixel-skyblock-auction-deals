@@ -1,3 +1,3 @@
 .flaskenv
-venv
-_pycache_
+venv/
+_pycache_/
