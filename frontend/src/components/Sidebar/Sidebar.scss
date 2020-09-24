@@ -1,4 +1,12 @@
 .sidebar {
     padding: 10px;
-    width: 160px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    form * {
+        margin: 5px;
+    }
+    
+
 }
+

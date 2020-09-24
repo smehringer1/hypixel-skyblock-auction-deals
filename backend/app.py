@@ -24,6 +24,7 @@ def find_lowest_price(itemName, binEnabled):
     return results
 
 def find_deals(percent_off_threshold,minimum_price):
+    percent_of = 1 - percent_off_threshold
     deals = []
     pipeline = [
         {'$match' : {'bin' :  True}},
@@ -36,7 +37,7 @@ def find_deals(percent_off_threshold,minimum_price):
             'item' : {'$arrayElemAt' : ['$items' , 1]}
         }},
         {'$project' : {'price' : '$item.price'}},
-        {'$sort' : {'_id' : 1}}
+        {'$sort' : { '_id' : 1 }}
     ]
     results = auctionDB.aggregate(pipeline)
     for result in results:
@@ -47,7 +48,7 @@ def find_deals(percent_off_threshold,minimum_price):
         if not second_lowest_price == 0:
             percent = lowest_price / second_lowest_price
             if second_lowest_price >= minimum_price:
-                if lowest_price / second_lowest_price < percent_off_threshold:
+                if lowest_price / second_lowest_price < percent_of:
                     deal = {'item_name' : item_name, 'lowest_price' : lowest_price, 'second_lowest_price' : second_lowest_price, 'percentage' : round(percent, 2)}
                     deals.append(deal)
     return deals
@@ -76,8 +77,8 @@ def get_lowest_auctions():
 
 @app.route('/api/auctions/deals')
 def get_deals():
-    percentage = request.args.get('percent', default = 0.8, type = float)
-    minimum_price = request.args.get('minprice', default = 0, type = int)
+    percentage = request.args.get('percent', type = float)
+    minimum_price = request.args.get('minprice', type = int)
     deals = dumps(find_deals(percentage,minimum_price))
     return deals
 
