@@ -1,5 +1,4 @@
-from db_updater import lowestPricesDB,auctionDB
-import json
+from initialize import auctionDB, lowestPricesDB
 
 
 def find_item_name(itemName, binEnabled):

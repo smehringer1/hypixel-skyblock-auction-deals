@@ -1,9 +1,9 @@
 from flask import Flask, request
 from bson.json_util import dumps
+import initialize
 from query import find_deals, find_item_name, find_lowest_price
 
 app = Flask(__name__)
-
 
 @app.route('/api')
 def home():

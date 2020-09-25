@@ -1,12 +1,13 @@
 FROM node:alpine
 
-WORKDIR /frontend
-ENV PATH /frontend/node_modules/.bin:$PATH
+WORKDIR /usr/src/frontend
 
-COPY package.json /frontend
+ENV PATH /usr/src/frontend/node_modules/.bin:$PATH
 
-RUN npm install --silent
-RUN npm install react-scripts -g --silent
+COPY package*.json .
+
+RUN yarn install --silent
+RUN yarn global add react-scripts
 
 COPY . ./
 

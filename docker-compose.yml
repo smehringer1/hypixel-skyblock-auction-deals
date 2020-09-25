@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+    client:
+        build: ./frontend
+        expose: 
+            - 3000
+        ports: 
+            - "3000:3000"
+        volumes:
+            - './frontend:/usr/src/frontend'
+            - '/usr/src/frontend/node_modules'
+        environment: 
+            - CHOKIDAR_USEPOLLING=true
+            - NODE_ENV=development
+        stdin_open: true
+    flaskapp:
+        build: ./flask
+        expose: 
+            - 5000
+        ports: 
+            - "5000:5000"
+        environment: 
+            MONGO_DOCKER: 'mongodb://127.0.0.1:27017'
+    mongodb:
+        image: mongo
+        ports:
+            - "127.0.0.1:27017:27017"
+        volumes:
+            - mongodata:/data/db
+    fetcher:
+        build: ./fetcher
+        environment: 
+            MONGO_DOCKER: 'mongodb://127.0.0.1:27017'
+            API_KEY: '&key=74a3284f-d0de-497d-a116-755c7fc7868a'
+volumes:
+    mongodata:
+        
