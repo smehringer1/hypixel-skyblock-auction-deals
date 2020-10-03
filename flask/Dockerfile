@@ -2,4 +2,4 @@ FROM python:3.8.5-alpine
 WORKDIR /usr/src/flaskapp
 COPY . .
 RUN pip install -r requirements.txt
-CMD ["python","app.py"]
+CMD python app.py -h 0.0.0.0
