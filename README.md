@@ -1,4 +1,6 @@
-# Hypixel Skyblock Auction House Deal Finder
+# Hypixel Skyblock Auction House Deal Finder (Deprecated)
+
+### Repository is deprecated and has numerous dependency security concerns.
 
 Utilizes Hypixel API to capture present auction house entries and calculate and project the biggest deals currently on sale. Updates once a minute.
 
